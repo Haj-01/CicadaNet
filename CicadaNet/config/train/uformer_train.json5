@@ -1,0 +1,72 @@
+{
+    "seed": 0,
+    "description": "null",
+    "root_dir": "G:\\JNT\\code\\Uformer\\job\\bird_new_dataset_5valid",
+    "cudnn_deterministic": false,
+    "trainer": {
+        "module": "trainer.uformer_trainer",
+        "main": "Trainer",
+        "epochs": 100,
+        "save_checkpoint_interval": 5,
+        "validation": {
+            "interval":5,
+            "find_max": true,
+            "custom": {
+                "visualization_limit": 20,
+                "n_fft": 640,
+                "win_length": 640,
+                "hop_length": 320
+            }
+        }
+    },
+    "model": {
+        "module": "Uformer_ofigin.uformer_stft",
+        "main": "Uformer",
+        "args": {}
+    },
+    "loss_function": {
+        "module": "test_net.loss",
+        "main": "mse_loss_for_variable_length_data",
+        "args": {}
+    },
+    "optimizer": {
+        "lr": 0.001,
+        "beta1": 0.9,
+        "beta2": 0.999
+    },
+    "train_dataset": {
+        "module": "dataset.ri_dataset",
+        "main": "Dataset",
+        "args": {
+            "dataset_list": "G:\\JNT\\dataset\\cleaning_noisy\\train.txt",
+            "limit": null,
+            "offset": 0,
+            "sr": 32000,
+            "n_fft": 640,
+            "win_length": 640,
+            "hop_length": 320,
+            "train": true
+        }
+    },
+    "validation_dataset": {
+        "module": "dataset.ri_dataset",
+        "main": "Dataset",
+        "args": {
+//            "dataset_list": "E:\\JNT\\Dataset\\CRN_Dataset32\\val239.txt",
+            "dataset_list": "G:\\JNT\\dataset\\cleaning_noisy\\val.txt",
+            "limit": null,
+            "offset": 0,
+            "sr": 32000,
+            "n_fft": 640,
+            "win_length": 640,
+            "hop_length": 320,
+            "train": false
+        },
+    },
+    "train_dataloader": {
+        "batch_size": 16,
+        "num_workers": 8,
+        "shuffle": true,
+        "pin_memory": true
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "model": {
+        "module": "model.crn32_glu_tscb",
+        "main": "CRN",
+        "args": {}
+    },
+    "dataset": {
+        "module": "dataset.dataset_enhancement",
+        "main": "Dataset",
+        "args": {
+            "noisy_dataset": "E:\\HAN\\database\\test.txt",
+            "limit": null,
+            "offset": 0,
+            "sr": 32000
+        }
+    },
+    "inference": {
+        "module": "inferencer.inferencer",
+        "main": "Inferencer",
+        "n_fft": 640,
+        "hop_length": 320,
+        "win_length": 640,
+        "sr": 32000,
+        "inference_type": "full_band_no_truncation"
+    }
+}

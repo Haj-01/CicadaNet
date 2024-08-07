@@ -1,0 +1,72 @@
+{
+  seed: 0,
+  description: "null",
+  root_dir: "E:\\HAN\\database\\log",
+  cudnn_deterministic: false,
+  trainer: {
+    module: "trainer.smm_trainer",
+    main: "Trainer",
+    epochs: 100,
+    save_checkpoint_interval: 1,
+    validation: {
+      interval: 1,
+      find_max: true,
+      custom: {
+        visualization_limit: 20,
+        n_fft: 640,
+        win_length: 640,
+        hop_length: 320,
+      },
+    },
+  },
+  model: {
+    module: "model.crn32_glu_tscb",
+    main: "CRN",
+    args: {},
+  },
+  loss_function: {
+    module: "model.loss",
+    main: "mse_loss_for_mag",
+    args: {},
+  },
+  optimizer: {
+    lr: 0.0004,
+    beta1: 0.9,
+    beta2: 0.999,
+  },
+  train_dataset: {
+    module: "dataset.dataset_variable_length_input",
+    main: "Dataset",
+    args: {
+      dataset_list: "E:\\HAN\\database\\train.txt",
+      limit: null,
+      offset: 0,
+      sr: 32000,
+      n_fft: 640,
+      hop_length: 320,
+      train: true,
+    },
+  },
+  validation_dataset: {
+    module: "dataset.dataset_variable_length_input",
+    main: "Dataset",
+    args: {
+      dataset_list: "E:\\HAN\\database\\validation.txt",
+      limit: null,
+      offset: 0,
+      sr: 32000,
+      n_fft: 640,
+      hop_length: 320,
+      train: false,
+    },
+  },
+  train_dataloader: {
+    batch_size: 8,
+    num_workers: 4,
+    shuffle: true,
+    pin_memory: true,
+  },
+  experiment_name: "cicadanet_train",
+  config_path: "config/train/cicadanet_train.json5",
+  preloaded_model_path: null,
+}
